@@ -6,6 +6,8 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
+
+	"github.com/Ladicle/denon-avr/pkg/denon"
 )
 
 const defaultTimeout = 3 * time.Second
@@ -33,7 +35,7 @@ func main() {
 
 	glog.Infof("Using build: %v - %v", gitRepo, version)
 
-	c, err := Dial(host, defaultTimeout)
+	c, err := denon.Dial(host, defaultTimeout)
 	if err != nil {
 		glog.Fatalf("Could not dial %v: %v", host, err)
 	}

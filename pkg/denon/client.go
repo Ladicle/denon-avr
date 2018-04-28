@@ -1,4 +1,4 @@
-package main
+package denon
 
 import (
 	"bufio"
