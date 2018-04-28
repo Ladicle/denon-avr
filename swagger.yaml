@@ -1,0 +1,215 @@
+swagger: "2.0"
+info:
+  description: "This is a API server to controll Denon AVR. It can control main and zone2 status, and also can change a radio tuner and bluetooth configuration."
+  version: "0.1.0"
+  title: "Denon AVR Controller"
+  contact:
+    email: "ladiclexxx@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v1"
+tags:
+- name: "power"
+  description: "Controls AVR power"
+- name: "zone1"
+  description: "Manages main zone"
+- name: "zone2"
+  description: "Manages second zone"
+- name: "radio"
+  description: "Changes radio tuner configurations"
+- name: "bluetooth"
+  description: "Changes bluetooth configurations"
+schemes:
+- "http"
+- "https"
+paths:
+  /power:
+    get:
+      tags:
+      - "power"
+      summary: "Get AVR power status"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Power'
+    post:
+      tags:
+      - "power"
+      summary: "Turn on/off AVR power"
+      operationId: "addPet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: '#/definitions/Power'
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad request"
+        500:
+          description: "Server error"
+  /zone1/power:
+    get:
+      tags:
+      - "zone1"
+      summary: "Get main zone power status"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Power'
+  /zone1/masterVolume:
+    get:
+      tags:
+      - "zone1"
+      summary: "Get main zone master volume"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Volume'
+  /zone1/channelVolume:
+    get:
+      tags:
+      - "zone1"
+      summary: "Get main zone channel volume"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Volume'   
+  /zone1/mute:
+    get:
+      tags:
+      - "zone1"
+      summary: "Get main zone mute status"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Mute'
+  /zone1/inputSource:
+    get:
+      tags:
+      - "zone1"
+      summary: "Get main zone input source"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Source'
+  /zone1/sleepTimer:
+    get:
+      tags:
+      - "zone1"
+      summary: "Get main zone sleep timer status"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SleepTimer'
+  /zone2/channelVolume:
+    get:
+      tags:
+      - "zone2"
+      summary: "Get zone2 channel volume"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Volume'   
+  /zone2/mute:
+    get:
+      tags:
+      - "zone2"
+      summary: "Get zone2 mute status"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Mute'
+  /zone2/inputSource:
+    get:
+      tags:
+      - "zone2"
+      summary: "Get zone2 input source"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Source'
+  /zone2/sleepTimer:
+    get:
+      tags:
+      - "zone2"
+      summary: "Get zone2 sleep timer status"
+      produces:
+      - "application/json"      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SleepTimer'
+definitions:
+  Power:
+    type: "object"
+    properties:
+      power:
+        type: "string"
+        enum: ["on", "off"]
+  Mute:
+    type: "object"
+    properties:
+      mute:
+        type: "string"
+        enum: ["on", "off"]            
+  Source:
+    type: "object"
+    properties:
+      source:
+        type: "string"
+  SleepTimer:
+    type: "object"
+    description: "sleep time minuites"
+    properties:
+      sleep-timer:
+        type: "integer"
+        minimum: 1
+        maximum: 120
+  Volume:
+    type: "object"
+    description: "volume decibel"
+    properties:
+      volume:
+        type: "integer"
+        minimum: 0
+        maximum: 80
