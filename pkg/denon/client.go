@@ -39,19 +39,19 @@ func (c *Client) Write(cmd, param string) {
 }
 
 // Read reads data from read buffer.
-func (c *Client) Read() ([]byte, error) {
+func (c *Client) Read() (string, error) {
 	buf := make([]byte, maxDataBytes)
 	for n := 0; n < len(buf); n++ {
 		if n > 0 && c.r.Buffered() == 0 {
-			return buf[:n], nil
+			return string(buf[:n]), nil
 		}
 		b, err := c.r.ReadByte()
 		if err != nil {
-			return nil, err
+			return "", err
 		}
 		buf[n] = b
 	}
-	return nil, fmt.Errorf("response data exceeded limit of the data length")
+	return "", fmt.Errorf("response data exceeded limit of the data length")
 }
 
 // Close closes connection.
