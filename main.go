@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/pflag"
 
 	"github.com/Ladicle/denon-avr/pkg/denon"
+	"github.com/Ladicle/denon-avr/pkg/denon/controller"
 )
 
 const defaultTimeout = 3 * time.Second
@@ -42,10 +43,5 @@ func main() {
 	defer c.Close()
 	glog.Infof("Success to dial %v", host)
 
-	c.Write("PW", "?")
-	data, err := c.Read()
-	if err != nil {
-		glog.Fatalf("Could not read response: %v", err)
-	}
-	glog.Infof("AVR: %v", string(data))
+	controller.PowerOn(c)
 }
